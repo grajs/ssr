@@ -23,7 +23,7 @@ export default (url = '', data = {}, method = 'get', formData = false) => {
         return formData
       }] : []
     }).then(({data}) => {
-      if (data.code === 1) {
+      if (data.code === 0) {
         resolve(data)
       } else {
         reject(data)

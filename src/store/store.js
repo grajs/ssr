@@ -1,18 +1,24 @@
+import axios from '../unitils/axios/fetch'
+
 export default {
   state: {
     userName: '',
-    token: ''
+    token: '',
+    list: []
   },
   mutations: {
     setUserName(state, name) {
       state.userName = name
+    },
+    setList(state, data) {
+      state.list = data
     }
   },
   actions: {
-    getUserInfo({state, commit}) {
-      return fetch('https://www.9ji.com/web/api/area/hotArea/v1').then(res => {
-        commit('setUserName', res.data.data)
-      })
+    fetchList({commit}) {
+      return axios('/api/web/api/area/hotArea/v1').then(({data}) => {
+        commit('setList', data)
+      }).catch(err => console.log(err))
     }
   }
 }
