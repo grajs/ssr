@@ -18,7 +18,11 @@
       return store.dispatch('fetchList')
     },
     computed: mapState(['list']),
+    created() {
+      this.$store.state.token = '43d87767ad2'
+    },
     mounted() {
+      console.log(this.$store.state.token)
       this.$axios('/cpp/api/plugin/info?name=highlight').then(data => {
         console.log(data)
       }).catch(err => {

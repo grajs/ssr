@@ -3,7 +3,7 @@ import axios from '../unitils/axios/fetch'
 export default {
   state: {
     userName: '',
-    token: '',
+    token: null,
     list: []
   },
   mutations: {
@@ -12,6 +12,12 @@ export default {
     },
     setList(state, data) {
       state.list = data
+    },
+    loginIn(state, token) {
+      state.token = token
+    },
+    loginOut(state) {
+      state.token = null
     }
   },
   actions: {
