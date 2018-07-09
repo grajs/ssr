@@ -7,7 +7,8 @@
 
 <script>
   export default {
-    mounted() {
+    create() {
+      console.log(this.$store.state.token)
     }
   }
 </script>

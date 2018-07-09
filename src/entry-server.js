@@ -1,15 +1,15 @@
 import {createApp} from './main'
 
 export default context => {
+  if (context.token) {
+    global._token = context.token
+  } else {
+    global._token = undefined
+  }
   return new Promise((resolve, reject) => {
     const {app, router, store} = createApp()
     router.push(context.url)
     router.onReady(() => {
-      if (context.token) {
-        store.commit('loginIn', context.token)
-      } else {
-        store.commit('loginOut')
-      }
       const matchedComponents = router.getMatchedComponents()
       !matchedComponents.length > 0 && reject(404)
       let asyncTask = []

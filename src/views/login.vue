@@ -7,7 +7,6 @@
 <script>
   export default {
     created() {
-      console.log(this.$store.state.token, 'login页面token')
     }
   }
 </script>

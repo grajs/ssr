@@ -16,11 +16,15 @@ const renderer = createBundleRenderer(serverBundle, {
   clientManifest: clientManifest
 })
 const render = ctx => new Promise((resolve, reject) => {
+  const context = {
+    url: ctx.url,
+    token: ctx.cookies.get('token')
+  }
   const url = ctx.url
   // 缓存管理
   if (cacheList.has(url)) {
     if (!webCache.has(url)) {
-      renderer.renderToString(ctx, (error, html) => {
+      renderer.renderToString(context, (error, html) => {
         if (error) {
           reject(error)
         } else {
@@ -32,7 +36,7 @@ const render = ctx => new Promise((resolve, reject) => {
       resolve(webCache.get(url))
     }
   } else {
-    renderer.renderToString(ctx, (error, html) => {
+    renderer.renderToString(context, (error, html) => {
       error ? reject(error) : resolve(html)
     })
   }
