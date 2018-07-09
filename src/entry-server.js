@@ -5,7 +5,11 @@ export default context => {
     const {app, router, store} = createApp()
     router.push(context.url)
     router.onReady(() => {
-      console.log(132, context.url)
+      if (context.token) {
+        store.commit('loginIn', context.token)
+      } else {
+        store.commit('loginOut')
+      }
       const matchedComponents = router.getMatchedComponents()
       !matchedComponents.length > 0 && reject(404)
       let asyncTask = []

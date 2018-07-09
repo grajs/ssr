@@ -21,8 +21,6 @@ module.exports = (url, OS) => {
   if (existsSync(pngPath)) {
     return url.replace(/\.img/, '.png') + hashQuery
   }
-  console.log(searchUrl)
-  console.log(jpgPath)
   if (existsSync(jpgPath)) {
     return url.replace(/\.img/, '.jpg') + hashQuery
   }

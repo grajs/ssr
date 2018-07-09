@@ -16,7 +16,6 @@ app.use(async (ctx, next) => {
     } else {
       const targetUrl = resolvePath(ctx.url, OS)
       ctx.url = targetUrl ? targetUrl : ctx.url
-      console.log(ctx.url)
     }
   }
   await next()

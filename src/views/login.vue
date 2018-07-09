@@ -6,8 +6,8 @@
 
 <script>
   export default {
-    mounted() {
-      console.log(this.$store.state.token)
+    created() {
+      console.log(this.$store.state.token, 'login页面token')
     }
   }
 </script>

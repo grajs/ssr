@@ -36,7 +36,8 @@ function render(ctx) {
     }
 
     const context = {
-      url: ctx.url
+      url: ctx.url,
+      token: ctx.cookies.get('token')
     }
     renderer.renderToString(context, (err, html) => {
       if (err) {
@@ -74,4 +75,4 @@ proxyConfig.forEach(i => {
   })))
 })
 
-app.listen(8080, '0.0.0.0', () => console.log('Web Run In https://localhost:8080'))
+app.listen(8080, '0.0.0.0', () => console.log('Web Run In http://localhost:8080'))

@@ -3,7 +3,7 @@ import axios from '../unitils/axios/fetch'
 export default {
   state: {
     userName: '',
-    token: null,
+    token: undefined,
     list: []
   },
   mutations: {
@@ -15,9 +15,17 @@ export default {
     },
     loginIn(state, token) {
       state.token = token
+      if (typeof document !== 'undefined') {
+        document.cookie = `token=${token}`
+      }
     },
     loginOut(state) {
-      state.token = null
+      state.token = undefined
+      if (typeof document !== 'undefined') {
+        const now = new Date()
+        now.setTime(now.getTime() - 1)
+        document.cookie = `token='';expires=${now.toUTCString()}`
+      }
     }
   },
   actions: {
