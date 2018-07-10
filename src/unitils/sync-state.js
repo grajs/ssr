@@ -7,7 +7,7 @@ export default (store) => {
     }
   } else {
     if (/token=[^;]+/.test(document.cookie)) {
-      store.commit('loginIn', document.cookie.match(/(?<=token=)[^;]+/)[0])
+      store.commit('loginIn', document.cookie.match(/token=[^;]+/)[0].split('=')[1])
     } else {
       store.commit('loginOut')
     }
