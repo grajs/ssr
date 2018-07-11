@@ -1,5 +1,6 @@
 <template>
   <div>
+    <i class="fa fa fa-snowflake-o"></i>
     <h1>VueSSR</h1>
     <router-link to="/demo">TO-DEMO</router-link>
     <div class="container"></div>
