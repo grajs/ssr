@@ -23,6 +23,9 @@
       // return store.dispatch('fetchList')
     },
     computed: mapState(['list']),
+    beforeMount() {
+      // this.$options.components.editor=()=>import('../components/editor')
+    },
     mounted() {
       // this.$axios('/cpp/api/plugin/info?name=highlight').then(data => {
       //   console.log(data)
