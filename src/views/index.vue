@@ -27,6 +27,7 @@
       // this.$options.components.editor=()=>import('../components/editor')
     },
     mounted() {
+      this.$message('3333')
       // this.$axios('/cpp/api/plugin/info?name=highlight').then(data => {
       //   console.log(data)
       // }).catch(err => {
@@ -39,5 +40,10 @@
 <style lang="scss">
   .container {
     @extend %demo;
+  }
+  i{
+    font-size: 22px;
+    width: 20px;
+    height: 20px;
   }
 </style>

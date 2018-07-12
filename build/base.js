@@ -1,7 +1,5 @@
 const resolve = path => require('path').resolve(__dirname, path)
-const glob = require('glob')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const PurifyCSSPlugin = require('purifycss-webpack')
 const {VueLoaderPlugin} = require('vue-loader')
 module.exports = {
   mode: 'production',
@@ -49,7 +47,7 @@ module.exports = {
       {
         test: /\.css$/,
         use: ExtractTextPlugin.extract({
-          use: ['css-loader', 'postcss-loader'],
+          use: 'css-loader',
           fallback: 'vue-style-loader'
         })
       },
@@ -59,7 +57,7 @@ module.exports = {
           use: ['css-loader', 'postcss-loader', 'sass-loader', {
             loader: 'sass-resources-loader',
             options: {
-              resources: [resolve('../src/assets/style/public.scss')]
+              resources: resolve('../src/assets/style/public.scss')
             }
           }],
           fallback: 'vue-style-loader'
@@ -73,10 +71,6 @@ module.exports = {
     new ExtractTextPlugin({
       filename: 'extract.[chunkhash:8].css',
       allChunks: true
-    }),
-    new PurifyCSSPlugin({
-      paths: glob.sync(resolve('../src/template.html')),
-      minimize: true
     }),
     new VueLoaderPlugin()
   ],
