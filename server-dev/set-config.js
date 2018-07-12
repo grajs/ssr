@@ -23,7 +23,7 @@ const scssRule = {
   use: ['vue-style-loader', 'css-loader', 'postcss-loader', 'sass-loader', {
     loader: 'sass-resources-loader',
     options: {
-      resources: [resolve('../src/assets/style/common.scss')]
+      resources: [resolve('../src/assets/style/public.scss')]
     }
   }]
 }
@@ -33,8 +33,8 @@ module.exports = (clientConfig, serverConfig) => {
   clientConfig.output.filename = serverConfig.output.filename = '[name].js'
   clientConfig.module.rules.splice(0, 5, vueRule, imageRule, cssRule, scssRule)
   serverConfig.module.rules.splice(0, 5, vueRule, imageRule, cssRule, scssRule)
-  clientConfig.plugins.shift()
-  serverConfig.plugins.shift()
+  clientConfig.plugins.splice(0, 2)
+  serverConfig.plugins.shift(0, 2)
   clientConfig.plugins.push(
     new webpack.HotModuleReplacementPlugin({multiStep: true}),
     new webpack.NoEmitOnErrorsPlugin()

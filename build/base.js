@@ -1,5 +1,7 @@
 const resolve = path => require('path').resolve(__dirname, path)
+const glob = require('glob')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const PurifyCSSPlugin = require('purifycss-webpack')
 const {VueLoaderPlugin} = require('vue-loader')
 module.exports = {
   mode: 'production',
@@ -14,7 +16,8 @@ module.exports = {
         test: /\.vue$/,
         loader: 'vue-loader',
         options: {
-          extractCSS: true
+          extractCSS: true,
+          preserveWhitespace: false
         }
       },
       {
@@ -46,20 +49,20 @@ module.exports = {
       {
         test: /\.css$/,
         use: ExtractTextPlugin.extract({
-          fallback: 'vue-style-loader',
-          use: ['css-loader', 'postcss-loader']
+          use: ['css-loader', 'postcss-loader'],
+          fallback: 'vue-style-loader'
         })
       },
       {
         test: /\.scss$/,
         use: ExtractTextPlugin.extract({
-          fallback: 'vue-style-loader',
           use: ['css-loader', 'postcss-loader', 'sass-loader', {
             loader: 'sass-resources-loader',
             options: {
-              resources: [resolve('../src/assets/style/common.scss')]
+              resources: [resolve('../src/assets/style/public.scss')]
             }
-          }]
+          }],
+          fallback: 'vue-style-loader'
         })
       },
       {test: /\.less$/, loader: ['style-loader', 'css-loader', 'less-loader']},
@@ -68,8 +71,12 @@ module.exports = {
   },
   plugins: [
     new ExtractTextPlugin({
-      filename: 'app.[chunkhash:8].css',
+      filename: 'extract.[chunkhash:8].css',
       allChunks: true
+    }),
+    new PurifyCSSPlugin({
+      paths: glob.sync(resolve('../src/template.html')),
+      minimize: true
     }),
     new VueLoaderPlugin()
   ],

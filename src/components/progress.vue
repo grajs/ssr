@@ -47,6 +47,15 @@
   }
 </script>
 
-<style scoped>
-  .progress {position: fixed;height: 2px;left: 0;top: 0;background-color: rgba(95, 184, 120, 0.9);box-shadow: 0 1px rgba(95, 184, 120, 0.2);transition: all 0.2s;z-index: 9999}
+<style lang="scss">
+  .progress {
+    position: fixed;
+    height: 2px;
+    left: 0;
+    top: 0;
+    background-color: rgba(95, 184, 120, 0.9);
+    box-shadow: 0 1px rgba(95, 184, 120, 0.2);
+    transition: all 0.2s;
+    z-index: 9999
+  }
 </style>
