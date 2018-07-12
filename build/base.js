@@ -5,7 +5,7 @@ module.exports = {
   mode: 'production',
   output: {
     path: resolve('../dist'),
-    filename: '[name].[chunkhash].js',
+    filename: '[name].[chunkhash:8].js',
     publicPath: '/'
   },
   module: {
@@ -22,7 +22,7 @@ module.exports = {
         use: [{
           loader: 'url-loader',
           options: {
-            name: 'assets/images/[name].[hash].[ext]',
+            name: 'assets/images/[name].[hash:8].[ext]',
             limit: 5000
           }
         }]
@@ -34,7 +34,7 @@ module.exports = {
             loader: 'image-webp-loader',
             options: {
               outputPath: resolve('../dist'),
-              name: `assets/images/[name].[hash].[ext]`,
+              name: `assets/images/[name].[hash:8].[ext]`,
               subQuality: {
                 'vue.jpg': 90
               },
@@ -50,27 +50,25 @@ module.exports = {
           use: ['css-loader', 'postcss-loader']
         })
       },
-      {test: /\.js$/, loader: ['babel-loader'], exclude: /node_modules/},
       {
         test: /\.scss$/,
-        loader: [
-          'vue-style-loader',
-          'css-loader',
-          'sass-loader',
-          {
+        use: ExtractTextPlugin.extract({
+          fallback: 'vue-style-loader',
+          use: ['css-loader', 'postcss-loader', 'sass-loader', {
             loader: 'sass-resources-loader',
             options: {
               resources: [resolve('../src/assets/style/common.scss')]
             }
-          }
-        ]
+          }]
+        })
       },
-      {test: /\.less$/, loader: ['style-loader', 'css-loader', 'less-loader']}
+      {test: /\.less$/, loader: ['style-loader', 'css-loader', 'less-loader']},
+      {test: /\.js$/, loader: ['babel-loader'], exclude: /node_modules/}
     ]
   },
   plugins: [
     new ExtractTextPlugin({
-      filename: 'common.[chunkhash].css',
+      filename: 'app.[chunkhash:8].css',
       allChunks: true
     }),
     new VueLoaderPlugin()

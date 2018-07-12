@@ -24,8 +24,6 @@ module.exports = (clientConfig, serverConfig) => {
   clientConfig.output.filename = serverConfig.output.filename = '[name].js'
   clientConfig.module.rules.splice(0, 4, vueRule, imageRule, cssRule)
   serverConfig.module.rules.splice(0, 4, vueRule, imageRule, cssRule)
-  serverConfig.plugins.shift()
-  clientConfig.plugins.shift()
   clientConfig.plugins.push(
     new webpack.HotModuleReplacementPlugin({multiStep: true}),
     new webpack.NoEmitOnErrorsPlugin()
