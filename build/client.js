@@ -10,17 +10,24 @@ module.exports = merge(base, {
   entry: {
     app: (isProduction ? [] : ['webpack-hot-middleware/client']).concat(['babel-polyfill', resolve('../src/entry-client.js')])
   },
-  optimization: {
+  optimization: isProduction ? {
     splitChunks: {
+      chunks: 'all',
       cacheGroups: {
-        manifest: {
+        init: {
+          name: 'init',
           test: /[\\/]node_modules[\\/]/,
-          name: 'manifest',
-          chunks: 'all'
+          priority: 10,
+          chunks: 'initial'
+        },
+        elementUI: {
+          name: 'elementUI',
+          test: /[\\/]node_modules[\\/]element-ui[\\/]/,
+          priority: 20
         }
       }
     }
-  },
+  } : {},
   plugins: [
     new VueSSRClientPlugin(),
     new CopyWebpackPlugin([
