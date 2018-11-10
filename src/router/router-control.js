@@ -1,4 +1,4 @@
-import syncState from '../unitils/sync-state'
+import syncState from '../utils/sync-state'
 
 export default (store, router) => {
   router.beforeEach((to, from, next) => {
@@ -12,7 +12,7 @@ export default (store, router) => {
       } else {
         next({
           path: '/login',
-          query: {redirect: to.fullPath},
+          query: { redirect: to.fullPath },
           replace: true
         })
       }

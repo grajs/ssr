@@ -1,11 +1,11 @@
 import Vue from 'vue'
 import App from './App'
-import {createRouter} from './router/index'
-import {createStore} from './store/index'
-import {sync} from 'vuex-router-sync'
+import { createRouter } from './router/index'
+import { createStore } from './store/index'
+import { sync } from 'vuex-router-sync'
 import routerControl from './router/router-control'
-import axios from './unitils/axios/index'
-import {Message} from 'element-ui'
+import axios from './utils/axios/index'
+import { Message } from 'element-ui'
 import 'font-awesome/css/font-awesome.min.css'
 import './assets/style/common.css'
 
@@ -22,5 +22,5 @@ export function createApp() {
     store,
     render: h => h(App)
   })
-  return {app, router, store}
+  return { app, router, store }
 }

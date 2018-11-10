@@ -1,4 +1,4 @@
-const {resolve} = require('path')
+const { resolve } = require('path')
 const nodeExternals = require('webpack-node-externals')
 const merge = require('webpack-merge')
 const base = require('./base')

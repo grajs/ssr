@@ -38,10 +38,7 @@
 </script>
 
 <style lang="scss">
-  .container {
-    @extend %demo;
-  }
-  i{
+  i {
     font-size: 22px;
     width: 20px;
     height: 20px;

@@ -8,6 +8,6 @@ export function createRouter() {
   return new Router({
     mode: 'history',
     routes,
-    scrollBehavior: () => ({x: 0, y: 0})
+    scrollBehavior: () => ({ y: 0 })
   })
 }

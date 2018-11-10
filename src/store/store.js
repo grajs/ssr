@@ -1,4 +1,4 @@
-import axios from '../unitils/axios/fetch'
+import axios from '../utils/axios/fetch'
 
 export default {
   state: {
@@ -29,8 +29,8 @@ export default {
     }
   },
   actions: {
-    fetchList({commit}) {
-      return axios('/api/web/api/area/hotArea/v1').then(({data}) => {
+    fetchList({ commit }) {
+      return axios('/api/web/api/area/hotArea/v1').then(({ data }) => {
         commit('setList', data)
       }).catch(err => console.log(err))
     }

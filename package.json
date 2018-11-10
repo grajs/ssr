@@ -1,18 +1,17 @@
 {
-  "name": "client",
+  "name": "ssr-vue",
   "version": "1.0.0",
-  "description": "",
+  "description": "ssr-vue",
   "main": "index.js",
   "scripts": {
-    "build-pc": "webpack --config build/server.js  --progress&&webpack --config build/client.js  --progress",
     "build": "rimraf dist&&webpack --config build/server.js  --progress&&webpack --config build/client.js  --progress",
-    "start": "npm run build&&node ./server",
-    "dev": "node ./server-dev",
+    "start": "cross-env NODE_ENV=production npm run build&&node ./server",
+    "dev": "cross-env NODE_ENV=development node ./server-dev",
     "lint": "eslint --ext .js,.vue src",
     "fix": "eslint --fix --ext .js,.vue src"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "liujianhua",
+  "license": "MIT",
   "devDependencies": {
     "autoprefixer": "^8.6.2",
     "babel-core": "^6.26.3",

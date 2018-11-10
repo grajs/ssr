@@ -1,12 +1,11 @@
-const {readFileSync} = require('fs')
-const {join} = require('path')
+const { readFileSync } = require('fs')
+const { join } = require('path')
 const MFS = require('memory-fs')
 const webpack = require('webpack')
 const chokidar = require('chokidar')
-const {koaDevMiddleware, koaHotMiddleware} = require('koa-webpack-middleware-zm')
+const { koaDevMiddleware, koaHotMiddleware } = require('koa-webpack-middleware-zm')
 const clientConfig = require('../build/client')
 const serverConfig = require('../build/server')
-const setConfig = require('./set-config')
 
 const readFile = (fs, file) => fs.readFileSync(join(clientConfig.output.path, file), 'utf-8')
 
@@ -20,7 +19,7 @@ module.exports = function setupDevServer(app, templatePath, createRender) {
   const update = () => {
     if (bundle && clientManifest) {
       ready()
-      createRender(bundle, {template, clientManifest})
+      createRender(bundle, { template, clientManifest })
     }
   }
 
@@ -28,8 +27,6 @@ module.exports = function setupDevServer(app, templatePath, createRender) {
     template = readFileSync(templatePath, 'utf-8')
     update()
   })
-
-  setConfig(clientConfig, serverConfig)
 
   const clientCompiler = webpack(clientConfig)
   const devMiddleware = require('webpack-dev-middleware')(clientCompiler, {
@@ -47,7 +44,7 @@ module.exports = function setupDevServer(app, templatePath, createRender) {
 
   app.use(koaDevMiddleware(devMiddleware))
   app.use(koaHotMiddleware(require('webpack-hot-middleware')(clientCompiler,
-    {heartbeat: 5000}
+    { heartbeat: 5000 }
   )))
 
   const serverCompiler = webpack(serverConfig)

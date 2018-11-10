@@ -1,4 +1,4 @@
-const {resolve} = require('path')
+const { resolve } = require('path')
 const fs = require('fs')
 const Koa = require('koa')
 const server = require('koa-static')
@@ -20,7 +20,7 @@ app.use(async (ctx, next) => {
   }
   await next()
 })
-app.use(server(resolve(__dirname, '../dist'), {index: 'default', maxage: 1000 * 60 * 60 * 24 * 30, immutable: true}))
+app.use(server(resolve(__dirname, '../dist'), { index: 'default', maxage: 1000 * 60 * 60 * 24 * 30, immutable: true }))
 app.use(router.routes()).use(router.allowedMethods())
 let reg = '^('
 proxyConfig.forEach(i => reg += `${i.from}|`)

@@ -22,15 +22,15 @@
 	# localhost:88
 	```
 	因为生产环境中同时运行PC和Mobile版本，版本间的切换依赖`userAgent`由后端判断，切换之后请刷新页面
-	
+
 5. 打包文件
 
 	PC版本产生文件夹为`dist-pc`，Mobile版本产生文件夹为`dist-m`，其中的资源文件均为`xxx.[hash]-m.xx`或者`xxx.[hash]-pc.xx`格式来区别
-	
+
 6. 端口设置
 
 	开发模式下项目地址为为`0.0.0.0:8080`，生产环境下占用`443`和`80`端口
-	
+
 ## 在分支上开发
 为了避免很多不必要的代码冲突，也为避免未完成的代码被发布，项目所有特性、新需求、bug修复都在分支上开发。开发测试完毕后，发布之前才合并到master，主分支必须和线上版本一致。拿到新需求，bug或优化，请严格按以下步骤开发
 #### 1.创建新分支
@@ -52,10 +52,10 @@ git merge master
 ```bash
 # 提交到自己的本地库
 # 产生新文件的情况下：
-git add . 
+git add .
 git commit -m 'new feature'
 # 没有新文件的情况下：
-git commit -am 'new feature' 
+git commit -am 'new feature'
 
 # 最后推送（如果不需要协作开发，可以不推送到远程库）
 git push origin new-branch
@@ -125,7 +125,7 @@ MessageBox({
 - 把路由归类，方在children里
 
 ## 数据交互
-为了统一管理使用axios，因为可以在前后端同时使用。要注意在SSR中created钩子分别会在服务端和浏览器端同时触发两次，所有数据的预取要写在asyncData中，有关配置参看`unitils/fetch.js`。
+为了统一管理使用axios，因为可以在前后端同时使用。要注意在SSR中created钩子分别会在服务端和浏览器端同时触发两次，所有数据的预取要写在asyncData中，有关配置参看`utils/fetch.js`。
 
 ## 登录及用户校验
 - 每个请求都会在header里带`Authorization`，Authorization的值由登录接口返回，状态管理中对应的是token，如需更改，提交mutations中的setToken方法，为了XX天免登陆功能，以及防止刷新页面丢失，token还存cookie中，可根据需要改为存sessionStorage或localStorage，注意`api/fetch.js`也需要更改。

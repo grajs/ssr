@@ -1,4 +1,4 @@
-import {createApp} from './main'
+import { createApp } from './main'
 
 export default context => {
   if (context.token) {
@@ -7,7 +7,7 @@ export default context => {
     global._token = undefined
   }
   return new Promise((resolve, reject) => {
-    const {app, router, store} = createApp()
+    const { app, router, store } = createApp()
     router.push(context.url)
     router.onReady(() => {
       const matchedComponents = router.getMatchedComponents()
@@ -15,7 +15,7 @@ export default context => {
       let asyncTask = []
       const searchSyncData = target => {
         if (target.asyncData) {
-          asyncTask.push(target.asyncData({store, route: router.currentRoute}))
+          asyncTask.push(target.asyncData({ store, route: router.currentRoute }))
         }
         if (target.components) {
           let components = target.components

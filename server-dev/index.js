@@ -1,5 +1,4 @@
 const resolve = path => require('path').resolve(__dirname, path)
-const fs = require('fs')
 const Koa = require('koa')
 const Router = require('koa-router')
 const mount = require('koa-mount')
@@ -7,7 +6,7 @@ const proxy = require('koa-better-http-proxy')
 const proxyConfig = require('../proxy-config')
 const router = new Router()
 const app = new Koa()
-const {createBundleRenderer} = require('vue-server-renderer')
+const { createBundleRenderer } = require('vue-server-renderer')
 
 function createRenderer(bundle, options) {
   return createBundleRenderer(bundle, Object.assign(options, {

@@ -1,5 +1,5 @@
-const {resolve} = require('path')
-const {existsSync} = require('fs')
+const { resolve } = require('path')
+const { existsSync } = require('fs')
 // 查找是否存在相应的图片资源和返回重写的链接
 module.exports = (url, OS) => {
   let targetUrl = url
