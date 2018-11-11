@@ -23,11 +23,9 @@ module.exports = {
         test: /\.(png|jpe?g|gif|eot|ttf|woff2?|svgz?)$/i,
         use: [{
           loader: 'url-loader',
-          options: isProduction ? {
-            name: 'assets/images/[name].[hash:8].[ext]',
+          options: {
+            name: isProduction ? 'assets/images/[name].[hash:8].[ext]' : 'assets/images/[name].[ext]',
             limit: 5000
-          } : {
-            name: `assets/images/[name].[ext]`
           }
         }]
       },
@@ -51,13 +49,14 @@ module.exports = {
   plugins: [
     new VueLoaderPlugin()
   ].concat(isProduction ? [new ExtractTextPlugin({
-    filename: 'extract.[chunkhash:8].css',
+    filename: 'style.[chunkhash:8].css',
     allChunks: true
   })] : []),
   resolve: {
     extensions: ['.js', '.json', '.css', '.vue'],
     alias: {
-      '~': resolve('../src')
+      '~': resolve('../src'),
+      '~~': resolve('../')
     }
   }
 }

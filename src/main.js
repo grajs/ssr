@@ -1,16 +1,15 @@
 import Vue from 'vue'
 import App from './App'
-import { createRouter } from './router/index'
-import { createStore } from './store/index'
+import { createRouter } from './router'
+import { createStore } from './store'
 import { sync } from 'vuex-router-sync'
 import routerControl from './router/router-control'
-import axios from './utils/axios/index'
-import { Message } from 'element-ui'
-import 'font-awesome/css/font-awesome.min.css'
+import axios from './utils/axios'
+import elementUi from './utils/register-element-ui'
 import './assets/style/common.css'
 
 Vue.use(axios)
-Vue.prototype.$message = Message
+Vue.use(elementUi)
 
 export function createApp() {
   const router = createRouter()

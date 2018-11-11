@@ -1,7 +1,7 @@
 [
   {
     "from": "/api",
-    "to": "https://m.9ji.com"
+    "to": "http://localhost:3000"
   },
   {
     "from": "/cpp",

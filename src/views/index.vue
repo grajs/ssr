@@ -1,38 +1,34 @@
 <template>
   <div>
-    <i class="fa fa fa-snowflake-o"></i>
-    <h1>VueSSR</h1>
+    <h1>SSR-VUE</h1>
     <router-link to="/demo">TO-DEMO</router-link>
-    <div class="container"></div>
-    <ul>
-      <li v-for="i in list" :key="i.id">{{i.name}}</li>
-    </ul>
+    <el-switch v-model="open">
+    </el-switch>
     <div>
       <button @click="$store.commit('loginIn','8888')">登录</button>
       <button @click="$store.commit('loginOut')">注销</button>
+    </div>
+    <div>
+      <ul>
+        <li v-for="item in list">{{item.name}}</li>
+      </ul>
     </div>
     <img src="../assets/images/vue.jpg"/>
   </div>
 </template>
 
 <script>
-  import {mapState} from 'vuex'
+  import { mapState } from 'vuex'
 
   export default {
-    asyncData({store}) {
-      // return store.dispatch('fetchList')
+    asyncData({ store }) {
+      return store.dispatch('fetchList')
     },
     computed: mapState(['list']),
-    beforeMount() {
-      // this.$options.components.editor=()=>import('../components/editor')
-    },
-    mounted() {
-      this.$message('3333')
-      // this.$axios('/cpp/api/plugin/info?name=highlight').then(data => {
-      //   console.log(data)
-      // }).catch(err => {
-      //   console.log(err)
-      // })
+    data: function () {
+      return {
+        open: true
+      }
     }
   }
 </script>

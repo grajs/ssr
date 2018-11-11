@@ -1,17 +1,15 @@
-import axios from '../utils/axios/fetch'
+import axios from '../utils/axios'
+
+const fetch = axios.fetch
 
 export default {
   state: {
-    userName: '',
     token: undefined,
     list: []
   },
   mutations: {
-    setUserName(state, name) {
-      state.userName = name
-    },
-    setList(state, data) {
-      state.list = data
+    setList(state, list) {
+      state.list = list
     },
     loginIn(state, token) {
       state.token = token
@@ -30,8 +28,8 @@ export default {
   },
   actions: {
     fetchList({ commit }) {
-      return axios('/api/web/api/area/hotArea/v1').then(({ data }) => {
-        commit('setList', data)
+      return fetch('/api/data').then(list => {
+        commit('setList', list)
       }).catch(err => console.log(err))
     }
   }

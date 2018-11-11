@@ -11,16 +11,20 @@ export default context => {
     router.push(context.url)
     router.onReady(() => {
       const matchedComponents = router.getMatchedComponents()
-      !matchedComponents.length > 0 && reject(404)
+      !matchedComponents.length && reject(404)
+      // 将asyncData钩子加入到组件生命周期，包括子组件
       let asyncTask = []
       const searchSyncData = target => {
         if (target.asyncData) {
           asyncTask.push(target.asyncData({ store, route: router.currentRoute }))
         }
+        // 递归遍历子组件
         if (target.components) {
           let components = target.components
           for (let i in components) {
-            searchSyncData(components[i])
+            if (components.hasOwnProperty(i)) {
+              searchSyncData(components[i])
+            }
           }
         }
       }
