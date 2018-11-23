@@ -5,8 +5,8 @@
     <el-switch v-model="open">
     </el-switch>
     <div>
-      <button @click="$store.commit('loginIn','8888')">登录</button>
-      <button @click="$store.commit('loginOut')">注销</button>
+      <button @click="$store.commit('setToken','888')">登录</button>
+      <button @click="$store.commit('setToken',undefined)">注销</button>
     </div>
     <div>
       <ul>

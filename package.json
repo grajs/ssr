@@ -63,6 +63,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "element-ui": "^2.4.2",
+    "js-cookie": "^2.2.0",
     "koa": "^2.5.0",
     "koa-better-http-proxy": "^0.2.4",
     "koa-mount": "^3.0.0",

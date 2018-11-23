@@ -1,13 +1,9 @@
 import { createApp } from './main'
 
 export default context => {
-  if (context.token) {
-    global._token = context.token
-  } else {
-    global._token = undefined
-  }
+  const { app, router, store } = createApp()
+  store.commit('setToken', context.token)
   return new Promise((resolve, reject) => {
-    const { app, router, store } = createApp()
     router.push(context.url)
     router.onReady(() => {
       const matchedComponents = router.getMatchedComponents()

@@ -1,4 +1,5 @@
 import axios from '../utils/axios'
+import Cookie from 'js-cookie'
 
 const fetch = axios.fetch
 
@@ -11,18 +12,14 @@ export default {
     setList(state, list) {
       state.list = list
     },
-    loginIn(state, token) {
+    setToken(state, token) {
       state.token = token
       if (typeof document !== 'undefined') {
-        document.cookie = `token=${token}`
-      }
-    },
-    loginOut(state) {
-      state.token = undefined
-      if (typeof document !== 'undefined') {
-        const now = new Date()
-        now.setTime(now.getTime() - 1)
-        document.cookie = `token='';expires=${now.toUTCString()}`
+        if (token) {
+          Cookie.set('token', token)
+        } else {
+          Cookie.remove('token')
+        }
       }
     }
   },

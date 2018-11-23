@@ -1,8 +1,9 @@
-import syncState from '../utils/sync-state'
-
 export default (store, router) => {
   router.beforeEach((to, from, next) => {
-    syncState(store)
+    // 服务器store同步到浏览器
+    if (typeof window !== 'undefined' && window.__INITIAL_STATE__) {
+      store.replaceState(window.__INITIAL_STATE__)
+    }
     if (to.matched.some(record => record.meta.title && typeof document !== 'undefined')) {
       document.title = to.meta.title
     }
