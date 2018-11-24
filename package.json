@@ -6,7 +6,7 @@
   "scripts": {
     "build": "rimraf dist&&webpack --config build/server.js  --progress&&webpack --config build/client.js  --progress",
     "start": "cross-env NODE_ENV=production npm run build&&node ./server",
-    "dev": "cross-env NODE_ENV=development node ./server-dev",
+    "dev": "cross-env NODE_ENV=development node ./server",
     "lint": "eslint --ext .js,.vue src",
     "fix": "eslint --fix --ext .js,.vue src"
   },

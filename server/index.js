@@ -1,14 +1,24 @@
 const { resolve } = require('path')
-const fs = require('fs')
 const Koa = require('koa')
 const server = require('koa-static')
 const mount = require('koa-mount')
-const router = require('./router')
+const creatRouter = require('./router')
 const proxy = require('koa-better-http-proxy')
 const proxyConfig = require('../proxy-config')
 const app = new Koa()
 
-app.use(server(resolve(__dirname, '../dist'), { index: 'default', maxage: 1000 * 60 * 60 * 24 * 30, immutable: true }))
+global.isDevelopment = process.env.NODE_ENV === 'development'
+
+const router = creatRouter(app)
+
+if (!global.isDevelopment) {
+  app.use(server(resolve(__dirname, '../dist'), {
+    index: 'default',
+    maxage: 1000 * 60 * 60 * 24 * 30,
+    immutable: true
+  }))
+}
+
 app.use(router.routes()).use(router.allowedMethods())
 
 // proxy

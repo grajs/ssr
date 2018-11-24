@@ -1,42 +1,53 @@
 const fs = require('fs')
-const { resolve } = require('path')
 const LRU = require('lru-cache')
-const cacheList = require('./cache-list')
 const { createBundleRenderer } = require('vue-server-renderer')
-const serverBundle = require('../dist/vue-ssr-server-bundle')
-const clientManifest = require('../dist/vue-ssr-client-manifest')
-const template = fs.readFileSync(resolve(__dirname, '../src/template.html'), 'utf-8')
+const HMR = require('./HMR')
 
-const webCache = LRU({ max: 200, maxAge: 1000 * 60 * 10 })
+const templateHtmlPath = require('path').resolve(__dirname, '../src/template.html')
+const template = fs.readFileSync(templateHtmlPath, 'utf-8')
 
-const renderer = createBundleRenderer(serverBundle, {
-  runInNewContext: false,
-  template: template,
-  clientManifest: clientManifest
-})
+const createRender = app => {
+  const webCache = LRU({ max: 200, maxAge: 1000 * 60 * 10 })
+  let renderer = null
+  let devRender = Promise.resolve()
 
-const render = ctx => new Promise((resolve, reject) => {
-  const context = { url: ctx.url, token: ctx.cookies.get('token') }
-  const url = ctx.url
-  // 缓存管理
-  if (cacheList.has(url)) {
-    if (!webCache.has(url)) {
-      renderer.renderToString(context, (error, html) => {
-        if (error) {
-          reject(error)
-        } else {
-          webCache.set(url, html)
-          resolve(html)
-        }
-      })
-    } else {
-      resolve(webCache.get(url))
-    }
+  if (global.isDevelopment) {
+    const createRenderer = (bundle, options) => createBundleRenderer(bundle, Object.assign(options, { runInNewContext: false }))
+    devRender = HMR(app, templateHtmlPath, (bundle, options) => renderer = createRenderer(bundle, options))
   } else {
-    renderer.renderToString(context, (error, html) => {
-      error ? reject(error) : resolve(html)
+    const serverBundle = require('../dist/vue-ssr-server-bundle')
+    const clientManifest = require('../dist/vue-ssr-client-manifest')
+    renderer = createBundleRenderer(serverBundle, {
+      runInNewContext: false,
+      template,
+      clientManifest: clientManifest
     })
   }
-})
 
-module.exports = render
+  const render = ctx => new Promise((resolve, reject) => {
+    const url = ctx.url
+    const context = { url, token: ctx.cookies.get('token') }
+    const toRender = (setCache) => {
+      renderer.renderToString(context, (error, html) => {
+        if (error) {
+          return reject(error)
+        }
+        setCache && webCache.set(url, html)
+        resolve(html)
+      })
+    }
+    // 缓存管理
+    if (global.isDevelopment) {
+      toRender()
+    } else {
+      if (webCache.has(url)) {
+        resolve(webCache.get(url))
+      } else {
+        toRender(true)
+      }
+    }
+  })
+  return { render, devRender }
+}
+
+module.exports = createRender
