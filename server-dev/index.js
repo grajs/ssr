@@ -7,6 +7,7 @@ const proxyConfig = require('../proxy-config')
 const router = new Router()
 const app = new Koa()
 const { createBundleRenderer } = require('vue-server-renderer')
+const HMR = require('./HMR')
 
 function createRenderer(bundle, options) {
   return createBundleRenderer(bundle, Object.assign(options, {
@@ -17,11 +18,7 @@ function createRenderer(bundle, options) {
 
 let renderer
 
-const readyPromise = require('./setup-dev-server')(
-  app,
-  resolve('../src/template.html'),
-  (bundle, options) => renderer = createRenderer(bundle, options)
-)
+const readyPromise = HMR(app, resolve('../src/template.html'), (bundle, options) => renderer = createRenderer(bundle, options))
 
 function render(ctx) {
   return new Promise((resolve, reject) => {
@@ -34,10 +31,7 @@ function render(ctx) {
       }
     }
 
-    const context = {
-      url: ctx.url,
-      token: ctx.cookies.get('token')
-    }
+    const context = { url: ctx.url, token: ctx.cookies.get('token') }
     renderer.renderToString(context, (err, html) => {
       if (err) {
         return handleError(err)
