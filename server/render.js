@@ -3,6 +3,8 @@ const LRU = require('lru-cache')
 const { createBundleRenderer } = require('vue-server-renderer')
 const HMR = require('./HMR')
 
+const isDevelopment = process.env.NODE_ENV === 'development'
+
 const templateHtmlPath = require('path').resolve(__dirname, '../src/template.html')
 const template = fs.readFileSync(templateHtmlPath, 'utf-8')
 
@@ -11,7 +13,7 @@ const createRender = app => {
   let renderer = null
   let devRender = Promise.resolve()
 
-  if (global.isDevelopment) {
+  if (isDevelopment) {
     const createRenderer = (bundle, options) => createBundleRenderer(bundle, Object.assign(options, { runInNewContext: false }))
     devRender = HMR(app, templateHtmlPath, (bundle, options) => renderer = createRenderer(bundle, options))
   } else {
@@ -37,7 +39,7 @@ const createRender = app => {
       })
     }
     // 缓存管理
-    if (global.isDevelopment) {
+    if (isDevelopment) {
       toRender()
     } else {
       if (webCache.has(url)) {

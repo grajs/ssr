@@ -7,11 +7,11 @@ const proxy = require('koa-better-http-proxy')
 const proxyConfig = require('../proxy-config')
 const app = new Koa()
 
-global.isDevelopment = process.env.NODE_ENV === 'development'
+const isDevelopment = process.env.NODE_ENV === 'development'
 
 const router = creatRouter(app)
 
-if (!global.isDevelopment) {
+if (!isDevelopment) {
   app.use(server(resolve(__dirname, '../dist'), {
     index: 'default',
     maxage: 1000 * 60 * 60 * 24 * 30,
